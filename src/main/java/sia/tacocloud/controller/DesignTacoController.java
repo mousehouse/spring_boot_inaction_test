@@ -33,7 +33,7 @@ public class DesignTacoController {
         );
 
         Type[] types = Ingredient.Type.values();
-        
+        return "";
     }
 
 }
