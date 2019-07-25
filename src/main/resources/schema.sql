@@ -17,6 +17,7 @@ create table if not exists Taco_Ingredients (
 
 alter table Taco_Ingredients
     add foreign key (taco) references Taco(id);
+
 alter table Taco_Ingredients
     add foreign key (ingredient) references Ingredient(id);
 
@@ -40,5 +41,6 @@ create table if not exists Taco_Order_Tacos (
 
 alter table Taco_Order_Tacos
     add foreign key (tacoOrder) references Taco_Order(id);
+
 alter table Taco_Order_Tacos
     add foreign key (taco) references Taco(id);
