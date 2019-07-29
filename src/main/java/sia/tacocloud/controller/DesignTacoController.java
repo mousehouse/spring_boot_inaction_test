@@ -4,15 +4,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 import sia.tacocloud.domain.Ingredient;
 import sia.tacocloud.domain.Ingredient.Type;
+import sia.tacocloud.domain.Order;
 import sia.tacocloud.domain.Taco;
 import sia.tacocloud.repository.IngredientRepository;
+import sia.tacocloud.repository.TacoRepository;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,9 +28,23 @@ public class DesignTacoController {
 
     private final IngredientRepository ingredientRepository;
 
+    private TacoRepository designRepo;
+
     @Autowired
-    public DesignTacoController(IngredientRepository ingredientRepository){
+    public DesignTacoController(IngredientRepository ingredientRepository,
+                                TacoRepository designRepo){
         this.ingredientRepository = ingredientRepository;
+        this.designRepo = designRepo;
+    }
+
+    @ModelAttribute(name = "order")
+    public Order order(){
+        return new Order();
+    }
+
+    @ModelAttribute(name = "taco")
+    public Taco taco(){
+        return new Taco();
     }
 
     @GetMapping
@@ -60,10 +75,17 @@ public class DesignTacoController {
     }
 
     @PostMapping
-    public String processDesign(Taco design){
+    public String processDesign(@Valid Taco design, Errors errors,
+                                @ModelAttribute Order order){
         //Save the taco design...
         //fix me
+        if (errors.hasErrors()){
+            return "design";
+        }
+
+        Taco saved = designRepo.save(design);
         log.info("Processing design: " + design);
+        order.addDesign(saved);
         return "redirect:/orders/current";
     }
 

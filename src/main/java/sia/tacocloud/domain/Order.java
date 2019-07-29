@@ -2,7 +2,9 @@ package sia.tacocloud.domain;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class Order {
@@ -17,4 +19,9 @@ public class Order {
     private String ccNumber;
     private String ccExpiration;
     private String ccCVV;
+    private List<Taco> tacos = new ArrayList<>();
+
+    public void addDesign(Taco design){
+        this.tacos.add(design);
+    }
 }
