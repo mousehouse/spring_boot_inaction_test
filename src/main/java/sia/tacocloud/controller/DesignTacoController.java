@@ -80,6 +80,7 @@ public class DesignTacoController {
         //Save the taco design...
         //fix me
         if (errors.hasErrors()){
+            log.error("there are some errors: " + errors.getAllErrors());
             return "design";
         }
 
