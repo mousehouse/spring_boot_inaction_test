@@ -15,7 +15,6 @@ import sia.tacocloud.repository.TacoRepository;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,8 +76,6 @@ public class DesignTacoController {
     @PostMapping
     public String processDesign(@Valid Taco design, Errors errors,
                                 @ModelAttribute Order order){
-        //Save the taco design...
-        //fix me
         if (errors.hasErrors()){
             log.error("there are some errors: " + errors.getAllErrors());
             return "design";
