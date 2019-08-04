@@ -33,9 +33,9 @@ public class JdbcIngredientRepository implements IngredientRepository {
     }
 
     @Override
-    public Ingredient findOne(String id){
+    public Ingredient findById(String id){
         return jdbc.queryForObject(
-                "select id, name, type frome Ingredient where id=?",
+                "select id, name, type from Ingredient where id=?",
                 this::mapRowToIngredient,id);
     }
 
